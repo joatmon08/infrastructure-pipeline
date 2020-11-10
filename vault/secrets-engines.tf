@@ -5,12 +5,23 @@ resource "vault_mount" "pipeline" {
 }
 
 resource "vault_generic_secret" "pipeline" {
-  path = "${vault_mount.pipeline.path}/bootstrap"
+  path = "${vault_mount.pipeline.path}/azure"
 
   data_json = <<EOT
 {
-  "db_login":   "admin",
-  "db_login_password":   "H@Sh1CoR3!"
+  "subscription_id": "${var.azure_subscription_id}",
+  "tenant_id": "${var.azure_tenant_id}"
+}
+EOT
+}
+
+resource "vault_generic_secret" "pipeline" {
+  path = "${vault_mount.pipeline.path}/database"
+
+  data_json = <<EOT
+{
+  "db_login": "admin",
+  "db_login_password": "H@Sh1CoR3!"
 }
 EOT
 }
@@ -23,9 +34,9 @@ resource "vault_azure_secret_backend" "azure" {
   path            = "${var.resource_group}/azure"
 }
 
-resource "vault_azure_secret_backend_role" "pipeline_role" {
+resource "vault_azure_secret_backend_role" "pipeline" {
   backend = vault_azure_secret_backend.azure.path
-  role    = "generated_role"
+  role    = "pipeline"
   ttl     = 300
   max_ttl = 600
 
