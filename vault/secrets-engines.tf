@@ -4,7 +4,7 @@ resource "vault_mount" "pipeline" {
   description = "For ${var.resource_group} static secrets"
 }
 
-resource "vault_generic_secret" "pipeline" {
+resource "vault_generic_secret" "azure" {
   path = "${vault_mount.pipeline.path}/azure"
 
   data_json = <<EOT
@@ -15,7 +15,7 @@ resource "vault_generic_secret" "pipeline" {
 EOT
 }
 
-resource "vault_generic_secret" "pipeline" {
+resource "vault_generic_secret" "database" {
   path = "${vault_mount.pipeline.path}/database"
 
   data_json = <<EOT
