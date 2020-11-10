@@ -5,7 +5,7 @@ resource "vault_mount" "pipeline" {
 }
 
 resource "vault_generic_secret" "pipeline" {
-  path = "${vault_mount.pipeline.path}"
+  path = vault_mount.pipeline.path
 
   data_json = <<EOT
 {
