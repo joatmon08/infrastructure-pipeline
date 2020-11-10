@@ -31,6 +31,6 @@ resource "vault_azure_secret_backend_role" "pipeline_role" {
 
   azure_roles {
     role_name = "Contributor"
-    scope     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${var.resource_group}"
+    scope     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${azurerm_resource_group.team.name}"
   }
 }

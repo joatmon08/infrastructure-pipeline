@@ -29,3 +29,9 @@ variable "resource_group" {
   description = "Azure resource group that Terraform can create resources"
   default     = "infrastructure-pipeline"
 }
+
+variable "location" {
+  type        = string
+  description = "Azure location"
+  default     = "West US"
+}
