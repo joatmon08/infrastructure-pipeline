@@ -11,7 +11,7 @@ path "azure/creds/infrastructure-pipeline" {
 }
 
 path "infrastructure-pipeline/*" {
-  capabilities = ["read"]
+  capabilities = ["read", "list"]
 }
 EOT
 }
