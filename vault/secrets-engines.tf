@@ -1,7 +1,7 @@
 resource "vault_mount" "pipeline" {
-  path        = "infrastructure-pipeline"
+  path        = "${var.resource_group}/static"
   type        = "kv-v2"
-  description = "For infrastructure-pipeline static secrets"
+  description = "For ${var.resource_group} static secrets"
 }
 
 resource "vault_generic_secret" "pipeline" {
@@ -20,7 +20,7 @@ resource "vault_azure_secret_backend" "azure" {
   tenant_id       = var.azure_tenant_id
   client_id       = var.azure_client_id
   client_secret   = var.azure_client_secret
-  path            = "${vault_mount.pipeline.path}/azure"
+  path            = "${var.resource_group}/azure"
 }
 
 resource "vault_azure_secret_backend_role" "pipeline_role" {

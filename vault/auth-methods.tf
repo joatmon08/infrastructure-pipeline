@@ -3,10 +3,10 @@ resource "vault_github_auth_backend" "org" {
 }
 
 resource "vault_policy" "team" {
-  name = "infrastructure-pipeline"
+  name = var.resource_group
 
   policy = <<EOT
-path "infrastructure-pipeline/*" {
+path "${var.resource_group}/*" {
   capabilities = ["read", "list"]
 }
 EOT
