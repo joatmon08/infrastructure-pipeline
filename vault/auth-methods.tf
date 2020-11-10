@@ -6,10 +6,6 @@ resource "vault_policy" "team" {
   name = "infrastructure-pipeline"
 
   policy = <<EOT
-path "azure/creds/infrastructure-pipeline" {
-  capabilities = ["read"]
-}
-
 path "infrastructure-pipeline/*" {
   capabilities = ["read", "list"]
 }
