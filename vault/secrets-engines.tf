@@ -4,6 +4,16 @@ resource "vault_mount" "pipeline" {
   description = "For ${var.resource_group} static secrets"
 }
 
+resource "vault_generic_secret" "terraform_cloud" {
+  path = "${vault_mount.pipeline.path}/terraform"
+
+  data_json = <<EOT
+{
+  "token": "${var.terraform_cloud_token}"
+}
+EOT
+}
+
 resource "vault_generic_secret" "azure" {
   path = "${vault_mount.pipeline.path}/azure"
 

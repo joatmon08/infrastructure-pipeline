@@ -24,6 +24,10 @@ variable "azure_client_secret" {
   type = string
 }
 
+variable "terraform_cloud_token" {
+  type = string
+}
+
 variable "resource_group" {
   type        = string
   description = "Azure resource group that Terraform can create resources"
