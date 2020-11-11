@@ -26,9 +26,10 @@ jobs:
     - name: Import Secrets
       uses: hashicorp/vault-action@v2.1.0
       with:
-        url: https://pipeline.vault.11eaeb92-853e-2d98-8405-0242ac110009.aws.hashicorp.cloud:8200
-        method: github
-        githubToken: ${{ secrets.VAULT_GITHUB_AUTH_TOKEN }}
+        url: ${{ secrets.VAULT_ADDR }}
+        method: approle
+        roleId: ${{ secrets.VAULT_ROLE_ID }}
+        secretId: ${{ secrets.VAULT_SECRET_ID }}
         namespace: admin
         secrets: |
             infrastructure-pipeline/azure/config subscription_id ;
