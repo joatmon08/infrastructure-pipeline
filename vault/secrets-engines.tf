@@ -19,7 +19,7 @@ resource "vault_generic_secret" "database" {
 
   data_json = <<EOT
 {
-  "db_login": "admin",
+  "db_login": "psqladminun",
   "db_login_password": "H@Sh1CoR3!"
 }
 EOT
