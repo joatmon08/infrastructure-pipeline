@@ -72,6 +72,7 @@ jobs:
         method: github
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         namespace: admin
+        tlsSkipVerify: true
         secrets: |
             infrastructure-pipeline/static/data/database db_login | TF_VAR_db_username ;
             infrastructure-pipeline/static/data/database db_login_password | TF_VAR_db_password ;
