@@ -79,13 +79,13 @@ jobs:
             infrastructure-pipeline/static/data/azure tenant_id | ARM_TENANT_ID ;
             infrastructure-pipeline/azure/creds/pipeline client_id | ARM_CLIENT_ID ;
             infrastructure-pipeline/azure/creds/pipeline client_secret | ARM_CLIENT_SECRET ;
-            infrastructure-pipeline/static/data/terraform token
+            infrastructure-pipeline/static/data/terraform token | TFC_TOKEN
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_token: '${{ steps.secrets.outputs.token }}'
+        cli_config_credentials_token: ${{ steps.secrets.outputs.TFC_TOKEN }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
