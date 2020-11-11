@@ -81,8 +81,6 @@ jobs:
             infrastructure-pipeline/azure/creds/pipeline client_secret | ARM_CLIENT_SECRET ;
             infrastructure-pipeline/static/data/terraform token | TFC_TOKEN
 
-
-
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -100,7 +98,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: |
-        bash secret.sh
+        source secret.sh
         terraform plan -var-file=prod.tfvars
 
       # On push to main, build or change infrastructure according to Terraform configuration files
@@ -108,5 +106,5 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        bash secret.sh
+        source secret.sh
         terraform apply -auto-approve -var-file=prod.tfvars
