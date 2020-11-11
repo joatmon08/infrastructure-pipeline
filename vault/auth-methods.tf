@@ -19,3 +19,18 @@ resource "vault_github_team" "team" {
     vault_policy.team.name
   ]
 }
+
+resource "vault_auth_backend" "approle" {
+  type = "approle"
+}
+
+resource "vault_approle_auth_backend_role" "pipeline" {
+  backend            = vault_auth_backend.approle.path
+  role_name          = var.pipeline_name
+  secret_id_num_uses = 0
+  token_ttl          = 600
+  token_max_ttl      = 3600
+  token_policies = [
+    vault_policy.team.name
+  ]
+}

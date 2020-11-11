@@ -34,6 +34,12 @@ variable "resource_group" {
   default     = "infrastructure-pipeline"
 }
 
+variable "pipeline_name" {
+  type        = string
+  description = "Name of pipeline for Vault AppRole"
+  default     = "infrastructure-pipeline"
+}
+
 variable "location" {
   type        = string
   description = "Azure location"
