@@ -8,22 +8,6 @@ variable "name" {
   description = "name of PostgreSQL database"
 }
 
-variable "azure_subscription_id" {
-  type = string
-}
-
-variable "azure_tenant_id" {
-  type = string
-}
-
-variable "azure_client_id" {
-  type = string
-}
-
-variable "azure_client_secret" {
-  type = string
-}
-
 variable "db_username" {
   type        = string
   description = "username for PostgreSQL database"
