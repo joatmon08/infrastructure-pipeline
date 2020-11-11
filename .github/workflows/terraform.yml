@@ -40,6 +40,12 @@ jobs:
             infrastructure-pipeline/azure/creds/pipeline client_secret | ARM_CLIENT_SECRET ;
             infrastructure-pipeline/static/data/terraform token | TFC_TOKEN
 
+    - name: Parse secrets
+      id: parse
+      run: |
+        echo "::set-output name=arm_subscription_id::$(echo ${SUBSCRIPTION_ID//\"})\n"
+        echo "::set-output name=arm_tenant_id::$(echo ${TENANT_ID//\"})\n"
+
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -56,10 +62,18 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: ARM_SUBSCRIPTION_ID=$(echo ${SUBSCRIPTION_ID//\"}) ARM_TENANT_ID=$(echo ${TENANT_ID//\"}) terraform plan -var-file=prod.tfvars
+      with:
+        env:
+          ARM_SUBSCRIPTION_ID=${{steps.parse.outputs.arm_subscription_id}}
+          ARM_TENANT_ID=${{steps.parse.outputs.arm_tenant_id}}
+      run: terraform plan -var-file=prod.tfvars
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
+      with:
+        env:
+          ARM_SUBSCRIPTION_ID=${{steps.parse.outputs.arm_subscription_id}}
+          ARM_TENANT_ID=${{steps.parse.outputs.arm_tenant_id}}
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: ARM_SUBSCRIPTION_ID=$(echo ${SUBSCRIPTION_ID//\"}) ARM_TENANT_ID=$(echo ${TENANT_ID//\"}) terraform apply -auto-approve -var-file=prod.tfvars
