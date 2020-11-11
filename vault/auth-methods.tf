@@ -7,7 +7,7 @@ resource "vault_policy" "team" {
 
   policy = <<EOT
 path "auth/approle/role/${var.resource_group}/secret-id" {
-  capabilities = ["write"]
+  capabilities = ["create", "update"]
 }
 EOT
 }
