@@ -40,6 +40,13 @@ jobs:
             infrastructure-pipeline/azure/creds/pipeline client_secret | ARM_CLIENT_SECRET ;
             infrastructure-pipeline/static/data/terraform token | TFC_TOKEN
 
+    - name: Verify secrets
+      run: |
+        if [ ${#SUBSCRIPTION_ID} -lt 36 ]; then echo "error" ; exit; fi
+        if [ ${#TENANT_ID} -lt 36 ]; then echo "error" ; exit; fi
+        if [ ${#ARM_CLIENT_ID} -lt 36 ]; then echo "error" ; exit; fi
+        if [ ${#ARM_CLIENT_SECRET} -lt 36 ]; then echo "error" ; exit; fi
+
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
