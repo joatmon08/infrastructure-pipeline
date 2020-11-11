@@ -14,17 +14,6 @@ resource "vault_generic_secret" "terraform_cloud" {
 EOT
 }
 
-resource "vault_generic_secret" "azure" {
-  path = "${vault_mount.pipeline.path}/azure"
-
-  data_json = <<EOT
-{
-  "subscription_id": "${var.azure_subscription_id}",
-  "tenant_id": "${var.azure_tenant_id}"
-}
-EOT
-}
-
 resource "vault_generic_secret" "database" {
   path = "${vault_mount.pipeline.path}/database"
 
