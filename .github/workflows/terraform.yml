@@ -71,6 +71,7 @@ jobs:
         url: https://pipeline.vault.11eaeb92-853e-2d98-8405-0242ac110009.aws.hashicorp.cloud:8200
         method: github
         githubToken: ${{ secrets.GITHUB_TOKEN }}
+        namespace: admin
         secrets: |
             infrastructure-pipeline/static/database db_login | TF_VAR_db_username ;
             infrastructure-pipeline/static/database db_login_password | TF_VAR_db_password ;
