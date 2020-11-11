@@ -73,6 +73,8 @@ jobs:
         githubToken: ${{ secrets.VAULT_GITHUB_AUTH_TOKEN }}
         namespace: admin
         secrets: |
+            infrastructure-pipeline/azure/config subscription_id | ARM_SUBSCRIPTION_ID ;
+            infrastructure-pipeline/azure/config tenant_id | ARM_TENANT_ID ;
             infrastructure-pipeline/static/data/database db_login | TF_VAR_db_username ;
             infrastructure-pipeline/static/data/database db_login_password | TF_VAR_db_password ;
             infrastructure-pipeline/azure/creds/pipeline client_id | ARM_CLIENT_ID ;
@@ -95,9 +97,6 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      env: # Or as an environment variable
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       run: terraform plan -var-file=prod.tfvars
 
       # On push to main, build or change infrastructure according to Terraform configuration files
