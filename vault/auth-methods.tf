@@ -6,8 +6,8 @@ resource "vault_policy" "team" {
   name = var.resource_group
 
   policy = <<EOT
-path "${var.resource_group}/*" {
-  capabilities = ["read", "list"]
+path "auth/approle/role/${var.resource_group}/secret-id" {
+  capabilities = ["write"]
 }
 EOT
 }
@@ -24,6 +24,16 @@ resource "vault_auth_backend" "approle" {
   type = "approle"
 }
 
+resource "vault_policy" "pipeline" {
+  name = var.resource_group
+
+  policy = <<EOT
+path "${var.resource_group}/*" {
+  capabilities = ["read"]
+}
+EOT
+}
+
 resource "vault_approle_auth_backend_role" "pipeline" {
   backend            = vault_auth_backend.approle.path
   role_name          = var.pipeline_name
@@ -33,6 +43,5 @@ resource "vault_approle_auth_backend_role" "pipeline" {
   token_ttl          = 600
   token_max_ttl      = 3600
   token_policies = [
-    vault_policy.team.name
-  ]
+    vault_policy.pipeline.name
 }
