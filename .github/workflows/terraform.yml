@@ -72,7 +72,6 @@ jobs:
         method: github
         githubToken: ${{ secrets.VAULT_GITHUB_AUTH_TOKEN }}
         namespace: admin
-        caCertificate: ${{ secrets.VAULT_CA_PEM }}
         secrets: |
             infrastructure-pipeline/static/data/database db_login | TF_VAR_db_username ;
             infrastructure-pipeline/static/data/database db_login_password | TF_VAR_db_password ;
