@@ -32,8 +32,8 @@ jobs:
         secretId: ${{ secrets.VAULT_SECRET_ID }}
         namespace: admin
         secrets: |
-            infrastructure-pipeline/azure/config subscription_id ;
-            infrastructure-pipeline/azure/config tenant_id ;
+            infrastructure-pipeline/azure/config subscription_id | SUBSCRIPTION_ID ;
+            infrastructure-pipeline/azure/config tenant_id | TENANT_ID ;
             infrastructure-pipeline/static/data/database db_login | TF_VAR_db_username ;
             infrastructure-pipeline/static/data/database db_login_password | TF_VAR_db_password ;
             infrastructure-pipeline/azure/creds/pipeline client_id | ARM_CLIENT_ID ;
@@ -63,10 +63,16 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: ARM_SUBSCRIPTION_ID=$(echo ${SUBSCRIPTION_ID//\"}) ARM_TENANT_ID=$(echo ${TENANT_ID//\"}) terraform plan -var-file=prod.tfvars
+      run: |
+        export ARM_SUBSCRIPTION_ID=$(echo $SUBSCRIPTION_ID | sed 's/"//g')
+        export ARM_TENANT_ID=$(echo $TENANT_ID | sed 's/"//g')
+        terraform plan -var-file=prod.tfvars
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: ARM_SUBSCRIPTION_ID=$(echo ${SUBSCRIPTION_ID//\"}) ARM_TENANT_ID=$(echo ${TENANT_ID//\"}) terraform apply -auto-approve -var-file=prod.tfvars
+      run: |
+        export ARM_SUBSCRIPTION_ID=$(echo $SUBSCRIPTION_ID | sed 's/"//g')
+        export ARM_TENANT_ID=$(echo $TENANT_ID | sed 's/"//g')
+        terraform apply -auto-approve -var-file=prod.tfvars
