@@ -44,4 +44,5 @@ resource "vault_approle_auth_backend_role" "pipeline" {
   token_max_ttl      = 3600
   token_policies = [
     vault_policy.pipeline.name
+  ]
 }
