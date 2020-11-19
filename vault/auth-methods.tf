@@ -3,7 +3,7 @@ resource "vault_github_auth_backend" "org" {
 }
 
 resource "vault_policy" "team" {
-  name = var.resource_group
+  name = "${var.resource_group}-team"
 
   policy = <<EOT
 path "auth/approle/role/${var.resource_group}/secret-id" {
