@@ -30,7 +30,8 @@ jobs:
         method: approle
         roleId: ${{ secrets.VAULT_ROLE_ID }}
         secretId: ${{ secrets.VAULT_SECRET_ID }}
-        namespace: admin
+        namespace: ${{ secrets.VAULT_NAMESPACE }}
+        exportToken: true
         secrets: |
             infrastructure-pipeline/azure/config subscription_id | SUBSCRIPTION_ID ;
             infrastructure-pipeline/azure/config tenant_id | TENANT_ID ;
@@ -67,6 +68,9 @@ jobs:
     - name: Terraform Plan
       id: plan
       if: github.event_name == 'pull_request'
+      env:
+        VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+        VAULT_NAMESPACE: ${{ secrets.VAULT_NAMESPACE }}
       run: |
         export ARM_SUBSCRIPTION_ID=$(echo $SUBSCRIPTION_ID | sed 's/"//g')
         export ARM_TENANT_ID=$(echo $TENANT_ID | sed 's/"//g')
@@ -102,6 +106,9 @@ jobs:
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      env:
+        VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+        VAULT_NAMESPACE: ${{ secrets.VAULT_NAMESPACE }}
       run: |
         export ARM_SUBSCRIPTION_ID=$(echo $SUBSCRIPTION_ID | sed 's/"//g')
         export ARM_TENANT_ID=$(echo $TENANT_ID | sed 's/"//g')
