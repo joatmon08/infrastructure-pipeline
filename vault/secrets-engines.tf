@@ -44,3 +44,8 @@ resource "vault_azure_secret_backend_role" "pipeline" {
     scope     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${azurerm_resource_group.team.name}"
   }
 }
+
+resource "vault_mount" "database" {
+  path = "${var.resource_group}/database"
+  type = "database"
+}

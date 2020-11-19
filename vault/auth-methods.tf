@@ -9,6 +9,9 @@ resource "vault_policy" "team" {
 path "auth/approle/role/${var.resource_group}/secret-id" {
   capabilities = ["create", "update"]
 }
+path "${var.resource_group}/database/*" {
+  capabilities = ["create", "read", "update", "delete"]
+}
 EOT
 }
 
