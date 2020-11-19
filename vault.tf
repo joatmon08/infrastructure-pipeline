@@ -12,5 +12,5 @@ resource "vault_database_secret_backend_role" "role" {
   backend             = "${var.resource_group}/database"
   name                = "application"
   db_name             = vault_database_secret_backend_connection.postgres.name
-  creation_statements = "CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";"
+  creation_statements = ["CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";"]
 }
