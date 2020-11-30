@@ -19,7 +19,7 @@ EOT
 resource "random_password" "password" {
   length           = 12
   special          = true
-  override_special = "!#&$"
+  override_special = "!&$"
 }
 
 resource "vault_generic_secret" "database" {
