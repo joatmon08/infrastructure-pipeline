@@ -22,7 +22,7 @@ variable "db_username" {
 variable "db_password" {
   type        = string
   description = "password for PostgreSQL database"
-  sensitive    = true
+  sensitive   = true
 }
 
 variable "vault_network_address" {
