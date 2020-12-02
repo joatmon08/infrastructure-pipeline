@@ -16,11 +16,13 @@ variable "region" {
 variable "db_username" {
   type        = string
   description = "username for PostgreSQL database"
+  sensitive   = true
 }
 
 variable "db_password" {
   type        = string
   description = "password for PostgreSQL database"
+  sensitive    = true
 }
 
 variable "vault_network_address" {
