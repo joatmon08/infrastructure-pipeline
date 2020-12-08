@@ -51,7 +51,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.14.1
+        terraform_version: 0.14.2
         cli_config_credentials_token: ${{ env.TFC_TOKEN }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
