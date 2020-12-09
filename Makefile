@@ -9,6 +9,10 @@ get-database-password:
 	vault read -field=username infrastructure-pipeline/database/creds/application
 	vault list sys/leases/lookup/infrastructure-pipeline/database/creds/application
 
+list-leases:
+	vault list sys/leases/lookup/infrastructure-pipeline/aws/creds/pipeline
+	vault list sys/leases/lookup/infrastructure-pipeline/database/creds/application
+
 build-network:
 	cd network && terraform init -backend-config=backend
 	cd network && terraform apply
