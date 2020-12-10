@@ -1,33 +1,3 @@
-resource "vault_github_auth_backend" "org" {
-  organization = var.github_organization
-}
-
-resource "vault_policy" "team" {
-  name = "${var.resource_group}-team"
-
-  policy = <<EOT
-path "auth/approle/role/${var.resource_group}/secret-id" {
-  capabilities = ["create", "update"]
-}
-
-path "sys/leases/lookup/*" {
-  capabilities = ["list", "read", "sudo"]
-}
-
-path "${var.resource_group}/*" {
-  capabilities = ["list", "read"]
-}
-EOT
-}
-
-resource "vault_github_team" "team" {
-  backend = vault_github_auth_backend.org.id
-  team    = var.github_team
-  policies = [
-    vault_policy.team.name
-  ]
-}
-
 resource "vault_auth_backend" "approle" {
   type = "approle"
 }

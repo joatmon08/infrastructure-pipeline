@@ -45,4 +45,4 @@ in AWS. It securely retrieves secrets from HashiCorp Vault.
    Enterprise. Vault configures the PostgreSQL database over a private connection.
 
 1. The demo uses HashiCorp Cloud Platform. You can substitute the Vault endpoint
-   with your own Vault instance, as long as it can connect to AWS.
+   with your own Vault instance, as long as it can connect to AWS.## Requirements
