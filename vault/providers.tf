@@ -1,13 +1,13 @@
 terraform {
-  required_version = "~>0.13"
+  required_version = "~>0.14"
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = "~> 2.15.0"
+      version = "~> 2.16.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.35.0"
+      version = "~> 2.39.0"
     }
   }
   backend "remote" {}
