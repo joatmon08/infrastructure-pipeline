@@ -19,5 +19,5 @@ module "hcp" {
 }
 
 resource "hcp_vault_cluster_admin_token" "vault" {
-  cluster_id = var.name
+  cluster_id = module.hcp.hcp_vault_id
 }

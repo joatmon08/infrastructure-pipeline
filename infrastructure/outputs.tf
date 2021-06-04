@@ -11,7 +11,12 @@ output "hvn_cidr_block" {
 }
 
 output "hcp_vault_id" {
-  value = var.name
+  value = module.hcp.hcp_vault_id
+}
+
+output "hcp_vault_endpoint" {
+  value = module.hcp.hcp_vault_public_endpoint
+  sensitive = true
 }
 
 output "hcp_vault_token" {
