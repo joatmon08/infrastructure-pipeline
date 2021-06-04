@@ -1,10 +1,14 @@
 data "aws_availability_zones" "available" {
   state = "available"
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
 }
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.64.0"
+  version = "3.0.0"
 
   name = var.name
 
@@ -19,12 +23,8 @@ module "vpc" {
   database_subnets             = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   create_database_subnet_group = true
 
-  tags = {
-    Pipeline = var.name
-  }
+  tags = var.tags
 
-  vpc_tags = {
-    Name = var.name
-  }
+  vpc_tags = var.tags
 }
 

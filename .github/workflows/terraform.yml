@@ -6,7 +6,7 @@ on:
     - main
     paths-ignore:
     - 'vault/**'
-    - 'network/**'
+    - 'infrastructure/**'
   pull_request:
 
 jobs:

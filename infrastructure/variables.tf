@@ -13,8 +13,7 @@ variable "hvn_cidr_block" {
   description = "IP address range of Vault to allow connection to database"
 }
 
-variable "peering_connection_has_been_added_to_hvn" {
-  type        = bool
-  description = "if connection has been added to hvn"
-  default     = false
+variable "tags" {
+  type        = map(string)
+  description = "tags to add to resources"
 }
