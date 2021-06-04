@@ -3,10 +3,10 @@ resource "vault_auth_backend" "approle" {
 }
 
 resource "vault_policy" "pipeline" {
-  name = var.resource_group
+  name = var.pipeline_name
 
   policy = <<EOT
-path "${var.resource_group}/*" {
+path "${var.pipeline_name}/*" {
   capabilities = ["read"]
 }
 

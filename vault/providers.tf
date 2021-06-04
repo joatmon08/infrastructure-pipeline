@@ -1,24 +1,15 @@
 terraform {
-  required_version = "~>0.14"
+  required_version = "~>0.15"
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = "~> 2.16.0"
-    }
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 2.39.0"
+      version = "~> 2.20"
     }
   }
-  backend "remote" {}
 }
 
-provider "vault" {}
-
-provider "azurerm" {
-  subscription_id = var.azure_subscription_id
-  tenant_id       = var.azure_tenant_id
-  client_id       = var.azure_client_id
-  client_secret   = var.azure_client_secret
-  features {}
+provider "vault" {
+  address   = data.terraform_remote_state.infrastructure.outputs.hcp_vault_endpoint
+  token     = data.terraform_remote_state.infrastructure.outputs.hcp_vault_token
+  namespace = var.vault_namespace
 }

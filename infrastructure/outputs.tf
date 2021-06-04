@@ -15,7 +15,7 @@ output "hcp_vault_id" {
 }
 
 output "hcp_vault_endpoint" {
-  value = module.hcp.hcp_vault_public_endpoint
+  value     = module.hcp.hcp_vault_public_endpoint
   sensitive = true
 }
 

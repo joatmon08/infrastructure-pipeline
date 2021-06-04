@@ -1,19 +1,29 @@
 // Static Passwords at key-value store
 
 resource "vault_mount" "pipeline" {
-  path        = "${var.resource_group}/static"
+  path        = "${var.pipeline_name}/static"
   type        = "kv-v2"
-  description = "For ${var.resource_group} static secrets"
+  description = "For ${var.pipeline_name} static secrets"
 }
 
-resource "vault_generic_secret" "terraform_cloud" {
-  path = "${vault_mount.pipeline.path}/terraform"
+// Generate Terraform Cloud token
 
-  data_json = <<EOT
-{
-  "token": "${var.terraform_cloud_token}"
+resource "vault_terraform_cloud_secret_backend" "tfc" {
+  backend     = "terraform"
+  description = "Manages the Terraform Cloud backend"
+  token       = var.terraform_cloud_token
 }
-EOT
+
+resource "vault_terraform_cloud_secret_role" "tfc" {
+  backend      = vault_terraform_cloud_secret_backend.tfc.backend
+  name         = "terraform-cloud"
+  organization = var.terraform_cloud_organization
+  team_id      = var.terraform_cloud_team_id
+}
+
+resource "vault_terraform_cloud_secret_creds" "tfc" {
+  backend = vault_terraform_cloud_secret_backend.tfc.backend
+  role    = vault_terraform_cloud_secret_role.tfc.name
 }
 
 resource "random_password" "password" {
@@ -33,39 +43,17 @@ resource "vault_generic_secret" "database" {
 EOT
 }
 
-// Azure Secrets Engine
-
-resource "vault_azure_secret_backend" "azure" {
-  subscription_id = var.azure_subscription_id
-  tenant_id       = var.azure_tenant_id
-  client_id       = var.azure_client_id
-  client_secret   = var.azure_client_secret
-  path            = "${var.resource_group}/azure"
-}
-
-resource "vault_azure_secret_backend_role" "pipeline" {
-  backend = vault_azure_secret_backend.azure.path
-  role    = "pipeline"
-  ttl     = 1800
-  max_ttl = 3600
-
-  azure_roles {
-    role_name = "Contributor"
-    scope     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${azurerm_resource_group.team.name}"
-  }
-}
-
 // Database secrets engine for PostgreSQL
 
 resource "vault_mount" "database" {
-  path = "${var.resource_group}/database"
+  path = "${var.pipeline_name}/database"
   type = "database"
 }
 
 // AWS Secrets Engine
 
 resource "vault_aws_secret_backend" "aws" {
-  path       = "${var.resource_group}/aws"
+  path       = "${var.pipeline_name}/aws"
   access_key = var.aws_access_key_id
   secret_key = var.aws_secret_access_key
 }
