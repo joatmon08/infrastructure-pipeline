@@ -9,7 +9,7 @@ resource "vault_mount" "pipeline" {
 // Generate Terraform Cloud token
 
 resource "vault_terraform_cloud_secret_backend" "tfc" {
-  backend     = "terraform"
+  backend     = "${var.pipeline_name}/terraform"
   description = "Manages the Terraform Cloud backend"
   token       = var.terraform_cloud_token
 }
@@ -19,11 +19,6 @@ resource "vault_terraform_cloud_secret_role" "tfc" {
   name         = "terraform-cloud"
   organization = var.terraform_cloud_organization
   team_id      = var.terraform_cloud_team_id
-}
-
-resource "vault_terraform_cloud_secret_creds" "tfc" {
-  backend = vault_terraform_cloud_secret_backend.tfc.backend
-  role    = vault_terraform_cloud_secret_role.tfc.name
 }
 
 resource "random_password" "password" {
