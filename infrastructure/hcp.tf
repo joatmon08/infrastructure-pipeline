@@ -3,19 +3,26 @@ locals {
 }
 
 module "hcp" {
-  source                    = "joatmon08/hcp/aws"
-  version                   = "1.0.0"
-  hvn_region                = var.region
-  hvn_name                  = var.name
-  hvn_cidr_block            = var.hvn_cidr_block
-  vpc_id                    = module.vpc.vpc_id
-  vpc_owner_id              = module.vpc.vpc_owner_id
-  vpc_cidr_block            = module.vpc.vpc_cidr_block
-  route_table_ids           = local.route_table_ids
-  number_of_route_table_ids = length(local.route_table_ids)
-  tags                      = var.tags
-  hcp_vault_name            = var.name
-  hcp_vault_public_endpoint = true
+  source                     = "joatmon08/hcp/aws"
+  version                    = "1.0.0"
+  hvn_region                 = var.region
+  hvn_name                   = var.name
+  hvn_cidr_block             = var.hvn_cidr_block
+  vpc_id                     = module.vpc.vpc_id
+  vpc_owner_id               = module.vpc.vpc_owner_id
+  vpc_cidr_block             = module.vpc.vpc_cidr_block
+  route_table_ids            = local.route_table_ids
+  number_of_route_table_ids  = length(local.route_table_ids)
+  tags                       = var.tags
+  hcp_consul_name            = var.name
+  hcp_consul_public_endpoint = true
+  hcp_vault_name             = var.name
+  hcp_vault_public_endpoint  = true
+}
+
+data "hcp_consul_cluster" "consul" {
+  depends_on = [module.hcp]
+  cluster_id = module.hcp.hcp_consul_id
 }
 
 resource "hcp_vault_cluster_admin_token" "vault" {
