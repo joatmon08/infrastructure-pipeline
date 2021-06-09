@@ -11,7 +11,7 @@ resource "aws_db_instance" "example" {
   engine_version       = data.aws_rds_engine_version.example.version
   instance_class       = "db.t2.micro"
   name                 = var.environment
-  username             = var.db_usernamae
+  username             = var.db_username
   password             = var.db_password
   db_subnet_group_name = data.aws_db_subnet_group.database.name
   skip_final_snapshot  = true
