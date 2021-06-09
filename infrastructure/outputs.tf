@@ -35,7 +35,3 @@ output "boundary_endpoint" {
 output "boundary_kms_recovery_key_id" {
   value = module.boundary.kms_recovery_key_id
 }
-
-output "boundary_target_runner" {
-  value = boundary_target.runner_ssh.id
-}
