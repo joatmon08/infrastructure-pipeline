@@ -22,7 +22,7 @@ resource "aws_instance" "runner" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
-  vpc_security_group_ids      = [module.vpc.default_security_group_id]
+  vpc_security_group_ids      = [module.boundary.boundary_security_group]
   subnet_id                   = module.vpc.private_subnets[0]
   associate_public_ip_address = false
 
