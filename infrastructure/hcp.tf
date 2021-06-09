@@ -25,6 +25,10 @@ data "hcp_consul_cluster" "consul" {
   cluster_id = module.hcp.hcp_consul_id
 }
 
+resource "hcp_consul_cluster_root_token" "consul" {
+  cluster_id = module.hcp.hcp_consul_id
+}
+
 resource "hcp_vault_cluster_admin_token" "vault" {
   cluster_id = module.hcp.hcp_vault_id
 }

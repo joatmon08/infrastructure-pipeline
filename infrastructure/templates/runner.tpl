@@ -38,13 +38,15 @@ echo '${consul_ca_file}' | base64 -d > /etc/consul/ca.pem
 echo '${consul_config_file}' | base64 -d > /etc/consul/config.json
 %{ endif }
 
+echo '{"ca_file":"/etc/consul/ca.pem", "acl":{"tokens":{"default":"${consul_token}"}}}' > /etc/consul/overrides.json
+
 # Setup systemd
 cat << EOF > /etc/systemd/system/consul.service
 [Unit]
 Description=Consul Server
 After=syslog.target network.target
 [Service]
-ExecStart=/usr/bin/consul agent -config-dir=/etc/consul
+ExecStart=/usr/bin/consul agent -config-dir=/etc/consul -data-dir=/tmp/consul/client
 ExecStop=/bin/sleep 5
 Restart=always
 [Install]

@@ -31,6 +31,7 @@ resource "aws_instance" "runner" {
     consul_http_addr   = data.hcp_consul_cluster.consul.consul_private_endpoint_url
     consul_ca_file     = data.hcp_consul_cluster.consul.consul_ca_file
     consul_config_file = data.hcp_consul_cluster.consul.consul_config_file
+    consul_token       = hcp_consul_cluster_root_token.consul.secret_id
   })
 
   tags     = merge({ "Name" = local.application_name }, var.tags)
