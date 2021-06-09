@@ -29,5 +29,5 @@ variable "vault_network_address" {
 }
 
 locals {
-  name = "${var.environment}-${var.pipeline_name}"
+  name = var.pipeline_name
 }
