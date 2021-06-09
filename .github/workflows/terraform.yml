@@ -39,7 +39,7 @@ jobs:
             infrastructure-pipeline/aws/creds/pipeline access_key | AWS_ACCESS_KEY_ID ;
             infrastructure-pipeline/aws/creds/pipeline secret_key | AWS_SECRET_ACCESS_KEY ;
             infrastructure-pipeline/aws/creds/pipeline security_token | AWS_SESSION_TOKEN ;
-            infrastructure-pipeline/static/data/terraform token | TFC_TOKEN
+            infrastructure-pipeline/terraform/creds/pipeline token | TFC_TOKEN
 
     - name: Verify secrets
       run: |
