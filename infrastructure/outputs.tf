@@ -23,3 +23,11 @@ output "hcp_vault_token" {
   value     = hcp_vault_cluster_admin_token.vault.token
   sensitive = true
 }
+
+output "boundary_endpoint" {
+  value = "http://${module.boundary.boundary_lb}:9200"
+}
+
+output "boundary_kms_recovery_key_id" {
+  value = module.boundary.kms_recovery_key_id
+}
