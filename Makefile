@@ -20,6 +20,7 @@ build-network:
 revoke:
 	vault lease revoke -prefix infrastructure-pipeline/aws/creds
 	vault lease revoke -prefix infrastructure-pipeline/database/creds
+	vault lease revoke -prefix infrastructure-pipeline/terraform/creds
 
 
 boundary-auth:

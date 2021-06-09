@@ -41,8 +41,8 @@ variable "pipeline_name" {
 }
 
 locals {
-  region = data.terraform_remote_state.infrastructure.outputs.region
-  ami_id = data.terraform_remote_state.infrastructure.outputs.runner_ami_id
-  subnet_id = data.terraform_remote_state.infrastructure.outputs.runner_subnet_id
+  region     = data.terraform_remote_state.infrastructure.outputs.region
+  ami_id     = data.terraform_remote_state.infrastructure.outputs.runner_ami_id
+  subnet_id  = data.terraform_remote_state.infrastructure.outputs.runner_subnet_id
   cidr_block = data.terraform_remote_state.infrastructure.outputs.vpc_cidr_block
 }

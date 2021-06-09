@@ -16,7 +16,7 @@ resource "vault_terraform_cloud_secret_backend" "tfc" {
 
 resource "vault_terraform_cloud_secret_role" "tfc" {
   backend      = vault_terraform_cloud_secret_backend.tfc.backend
-  name         = "terraform-cloud"
+  name         = "pipeline"
   organization = var.terraform_cloud_organization
   team_id      = var.terraform_cloud_team_id
 }
