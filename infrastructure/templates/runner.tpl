@@ -31,7 +31,7 @@ mkdir -p /etc/consul
 mkdir -p /etc/consul/certs
 
 %{ if consul_ca_file != "" }
-echo '${consul_ca_file}' | base64 -d > /etc/consul/certs/consul-agent-ca.pem
+echo '${consul_ca_file}' | base64 -d > /etc/consul/ca.pem
 %{ endif }
 
 %{ if consul_config_file != "" }

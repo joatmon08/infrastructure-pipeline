@@ -20,3 +20,10 @@ build-network:
 revoke:
 	vault lease revoke -prefix infrastructure-pipeline/aws/creds
 	vault lease revoke -prefix infrastructure-pipeline/database/creds
+
+
+boundary-auth:
+	boundary authenticate password -auth-method-id $(shell cd boundary && terraform output -raw boundary_auth_method_id) -login-name rosemary -password $(shell cd boundary && terraform output -raw boundary_operations_password)
+
+ssh:
+	boundary connect ssh -target-id=$(shell cd boundary && terraform output -raw boundary_target_runner) -username=ubuntu -- -i id_rsa
