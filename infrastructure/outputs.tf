@@ -6,6 +6,14 @@ output "id" {
   value = module.vpc.vpc_id
 }
 
+output "runner_ami_id" {
+  value = data.aws_ami.ubuntu.id
+}
+
+output "runner_subnet_id" {
+  value = aws_instance.runner.subnet_id
+}
+
 output "database_subnet_group" {
   value = module.vpc.database_subnet_group
 }
