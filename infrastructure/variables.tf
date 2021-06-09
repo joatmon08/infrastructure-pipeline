@@ -17,3 +17,15 @@ variable "tags" {
   type        = map(string)
   description = "tags to add to resources"
 }
+
+variable "private_ssh_key" {
+  description = "Base64 encoded contents of private SSH key for Boundary and EKS nodes"
+  type        = string
+  sensitive   = true
+}
+
+variable "client_cidr_block" {
+  type        = string
+  description = "Client CIDR block"
+  sensitive   = true
+}

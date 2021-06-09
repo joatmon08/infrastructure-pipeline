@@ -33,5 +33,6 @@ resource "aws_instance" "runner" {
     consul_config_file = data.hcp_consul_cluster.consul.consul_config_file
   })
 
-  tags = merge({ "Name" = local.application_name }, var.tags)
+  tags     = merge({ "Name" = local.application_name }, var.tags)
+  key_name = module.boundary.boundary_key_name
 }
